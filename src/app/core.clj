@@ -23,3 +23,6 @@
         color-map (get-color-map colors) ]
     (select-values color-map (map str (vec guess)))))  
 
+(defn get-pin-feedback [guess-pin combo-pin unique-colors]
+  (if (= combo-pin guess-pin) "white"
+    (if (unique-colors guess-pin) "black")))
