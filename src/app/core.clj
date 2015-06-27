@@ -1,4 +1,5 @@
-(ns app.core)
+(ns app.core
+  (:require [clojure.pprint :as pp]))
 
 (def colors #{"red" "green" "blue" "orange" "white" "yellow"})
 (def nturns 10)
@@ -42,3 +43,14 @@
             (update-in combo-freqs [guess-cur] dec)
             combo-freqs)
           (conj feedback elt-feedback))))))
+
+(defn play-game []
+  (let [combo (get-combo colors ncolors)]
+    (loop [victory false
+          turns-left nturns]
+      (if (or victory (= turns-left 0))
+        [victory combo]
+        (let [guess (get-user-guess colors)
+              feedback (get-feedback guess combo)]
+          (pp/pprint feedback)
+          (recur (= guess combo) (dec turns-left)))))))
