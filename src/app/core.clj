@@ -23,8 +23,22 @@
         color-map (get-color-map colors) ]
     (select-values color-map (map str (vec guess)))))  
 
-(defn get-pin-feedback-fn [combo]
-  (fn [guess-pin combo-pin]
-    (let [unique-colors (set combo)]
-      (if (= combo-pin guess-pin) "white"
-        (if (unique-colors guess-pin) "black")))))
+(defn get-feedback [guess combo]
+  (loop [guess guess
+         combo combo
+         combo-freqs (frequencies combo)
+         feedback []]
+    (if (empty? guess)
+      feedback
+      (let [guess-cur (first guess)
+            combo-cur (first combo)
+            elt-feedback
+              (if (> (get combo-freqs guess-cur 0) 0)
+                (if (= guess-cur combo-cur) "black" "white"))]
+        (recur
+          (rest guess)
+          (rest combo)
+          (if (not (nil? elt-feedback))
+            (update-in combo-freqs [guess-cur] dec)
+            combo-freqs)
+          (conj feedback elt-feedback))))))
