@@ -30,7 +30,7 @@
          combo-freqs (frequencies combo)
          feedback []]
     (if (empty? guess)
-      feedback
+      (shuffle (remove nil? feedback))
       (let [guess-cur (first guess)
             combo-cur (first combo)
             elt-feedback
