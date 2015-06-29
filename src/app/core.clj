@@ -24,13 +24,15 @@
         color-map (get-color-map colors) ]
     (select-values color-map (map str (vec guess)))))  
 
-(defn get-feedback [guess combo]
+; find which elements of the user guess vector, if any, match the hidden combo in both color and location
+(defn get-loc-matches [guess combo]
   (loop [guess guess
-         combo combo
-         combo-freqs (frequencies combo)
-         feedback []]
+          combo combo
+          feedback []
+          remainder []
+          combo-freqs (frequencies combo)]
     (if (empty? guess)
-      (shuffle (remove nil? feedback))
+      [(shuffle (remove nil? feedback)) remainder combo-freqs]
       (let [guess-cur (first guess)
             combo-cur (first combo)
             elt-feedback
@@ -39,10 +41,31 @@
         (recur
           (rest guess)
           (rest combo)
-          (if (not (nil? elt-feedback))
+          (if (= elt-feedback "black")
+            (conj feedback "black")
+            feedback)
+          (if (= elt-feedback "black")
+            remainder
+            (conj remainder guess-cur))
+          (if (= elt-feedback "black")
             (update-in combo-freqs [guess-cur] dec)
-            combo-freqs)
-          (conj feedback elt-feedback))))))
+            combo-freqs))))))
+
+; Do arguments fall within expected nature of arguments? How to handle if they don't?
+; Test over all possible combinations of groupings four-color arguments? Also test to make sure that different orderings of the same combo/guess don't make a difference
+(defn get-feedback [guess combo]
+  (let [[feedback remainder combo-freqs] (get-loc-matches guess combo)]
+    (loop [feedback feedback
+            remainder remainder
+            combo-freqs combo-freqs]
+      (if (empty? remainder)
+        (shuffle feedback)
+        (let [cur (first remainder)
+              elt-found (> (get combo-freqs cur 0) 0)]
+          (recur
+            (if elt-found (conj feedback "white") feedback)
+            (rest remainder)
+            (if elt-found (update-in combo-freqs [cur] dec) combo-freqs)))))))
 
 (defn play-game []
   (let [combo (get-combo colors ncolors)]
