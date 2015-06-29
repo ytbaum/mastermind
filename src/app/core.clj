@@ -1,10 +1,9 @@
 (ns app.core
-  (:require [clojure.pprint :as pp]))
+  (:require [clojure.pprint :as pp] [clojure.string :as s :only [lower-case]]))
 
 (def colors #{"red" "green" "blue" "orange" "white" "yellow"})
 (def nturns 10)
 (def ncolors 4)
-(def should-play true)
 
 (defn get-combo [colors ncolors]
   (repeatedly ncolors (fn [] (rand-nth (vec colors)))))
@@ -82,3 +81,27 @@
               feedback (get-feedback guess combo)]
           (pp/pprint feedback)
           (recur (= guess combo) (dec turns-left)))))))
+
+(defn parse-should-play [response]
+  (= \y (get (s/lower-case response) 0)))
+
+(defn ask-should-play []
+  (loop [response nil]
+    (if response
+      response
+      (do
+        (println "Play again? (y/n):")
+        (let [input (s/lower-case (read-line))
+              response (case input
+                        ("y" "yes") "y"
+                        ("n" "no") "n"
+                        (println "Please enter 'yes' or 'no' ('y'/'n'):"))]
+          (recur response))))))
+
+(defn play []
+  (loop [should-play true]
+    (if (= "n" should-play)
+      (println "Thanks for playing!")
+      (do
+        (play-game)
+        (recur (ask-should-play))))))
