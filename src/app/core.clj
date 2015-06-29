@@ -67,12 +67,17 @@
             (rest remainder)
             (if elt-found (update-in combo-freqs [cur] dec) combo-freqs)))))))
 
+(defn print-result [victory]
+  (if victory (println "VICTORY!!!") (println "Bow to me...")))
+
 (defn play-game []
   (let [combo (get-combo colors ncolors)]
     (loop [victory false
           turns-left nturns]
       (if (or victory (= turns-left 0))
-        [victory combo]
+        (do
+          (print-result victory)
+          [victory combo])
         (let [guess (get-user-guess colors)
               feedback (get-feedback guess combo)]
           (pp/pprint feedback)
