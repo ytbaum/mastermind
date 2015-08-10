@@ -30,14 +30,14 @@
 (defn chooser-square [col]
   (canvas :background col
     :size [50 :by 50]
-    :listen [:mouse-clicked (fn [e] (alert (str col " was Clicked!")))]))
+    :listen [:mouse-clicked (fn [e] (return-from-dialog e col))]))
 
 (defn color-chooser []
-  (frame
+  (dialog
     :title "Color Chooser"
-    :height 100
-    :width 400
-    :content (horizontal-panel :items (vec (map chooser-square colors)))))
+    :content "Choose a color:"
+    :size [400 :by 200]
+    :options (map chooser-square colors)))
 
 (defn show-yf []
   (-> (yonis-frame) show!))
