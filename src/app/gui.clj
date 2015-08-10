@@ -13,7 +13,10 @@
       (style :background "#FFFFFF"))))
 
 (defn guess-square [w h]
-  (canvas :background "#000000" :size [w :by h] :paint paint-guess-square))
+  (canvas :background "#000000"
+    :size [w :by h]
+    :paint paint-guess-square
+    :listen [:mouse-clicked (fn [e] (config! e :background (show! (color-chooser))))]))
 
 (defn guess-row [num-pegs]
   (horizontal-panel
