@@ -3,15 +3,6 @@
 
 (def num-pegs 4)
 
-(defn yf-paint [c g]
-  (let [w (.getWidth c)
-        w2 (/ w 2)
-        h (.getHeight c)
-        w2 (/ h 2)]
-    (draw g
-      (rect 10 10 100 50)
-      (style :background (color 128 128 128 128)))))
-
 (defn paint-guess-square [c g]
   (let [ht (.getHeight c)
         wd (.getWidth c)
