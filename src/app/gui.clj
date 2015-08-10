@@ -1,6 +1,8 @@
 (ns app.gui
   (:use [seesaw core graphics color]))
 
+(def num-pegs 4)
+
 (defn yf-paint [c g]
   (let [w (.getWidth c)
         w2 (/ w 2)
@@ -21,12 +23,9 @@
 (defn guess-square [w h]
   (canvas :background "#000000" :size [w :by h] :paint paint-guess-square))
 
-(defn guess-row []
+(defn guess-row [num-pegs]
   (horizontal-panel
-    :items [(guess-square 100 100)
-            (guess-square 100 100)
-            (guess-square 100 100)
-            (guess-square 100 100)]
+    :items (vec (repeatedly num-pegs #(guess-square 100 100)))
     :border 5))
 
 (defn yonis-frame []
@@ -34,7 +33,7 @@
     :title "Yoni's frame"
     :height 500
     :width 500
-    :content (guess-row)))
+    :content (guess-row num-pegs)))
 
 (defn show-yf []
   (-> (yonis-frame) show!))
