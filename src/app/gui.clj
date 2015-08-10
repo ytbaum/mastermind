@@ -1,5 +1,6 @@
 (ns app.gui
-  (:use [seesaw core graphics color]))
+  (:use [seesaw core graphics color])
+  (:use app.core))
 
 (def num-pegs 4)
 
@@ -25,6 +26,18 @@
     :height 500
     :width 500
     :content (guess-row num-pegs)))
+
+(defn chooser-square [col]
+  (canvas :background col
+    :size [50 :by 50]
+    :listen [:mouse-clicked (fn [e] (alert (str col " was Clicked!")))]))
+
+(defn color-chooser []
+  (frame
+    :title "Color Chooser"
+    :height 100
+    :width 400
+    :content (horizontal-panel :items (vec (map chooser-square colors)))))
 
 (defn show-yf []
   (-> (yonis-frame) show!))
