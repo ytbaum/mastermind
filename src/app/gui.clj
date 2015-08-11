@@ -28,7 +28,9 @@
     :title "Yoni's frame"
     :height 500
     :width 500
-    :content (guess-row num-pegs)))
+    :content (vertical-panel
+                :items (vec (repeatedly nturns #(guess-row num-pegs)))
+                :border 5)))
 
 (defn chooser-square [col]
   (canvas :background col
