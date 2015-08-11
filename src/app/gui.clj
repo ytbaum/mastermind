@@ -23,7 +23,7 @@
     :items (vec (repeatedly num-pegs #(guess-square 100 100)))
     :border 5))
 
-(defn yonis-frame []
+(defn board []
   (frame
     :title "Yoni's frame"
     :height 500
@@ -42,5 +42,5 @@
     :size [400 :by 200]
     :options (map chooser-square colors)))
 
-(defn show-yf []
-  (-> (yonis-frame) show!))
+(defn show-board []
+  (-> (board) show!))
