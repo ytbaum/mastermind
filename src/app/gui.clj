@@ -2,8 +2,11 @@
   (:use [seesaw core graphics color border])
   (:use app.core))
 
+(def default-col "lightGray")
+
 (defn guess-square [w h]
   (canvas
+    :background default-col
     :border (line-border :thickness 5 :color "#000000")
     :size [w :by h]
     :paint nil))
