@@ -45,7 +45,9 @@
 (defn activate-row [board row-num]
   (listen
     (select (to-root board) [(keyword (str "#row-" row-num)) (keyword "JPanel")])
-    :mouse-clicked (fn [e] (config! e :background (show! (color-chooser))))))
+    :mouse-clicked (fn [e]
+                    (if-let [background (show! (color-chooser))]
+                      (config! e :background background)))))
 
 (defn show-board []
   (-> (board) show!))
