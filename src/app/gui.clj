@@ -13,8 +13,7 @@
 (defn guess-square [w h]
   (canvas :background "#000000"
     :size [w :by h]
-    :paint paint-guess-square
-    :listen [:mouse-clicked (fn [e] (config! e :background (show! (color-chooser))))]))
+    :paint paint-guess-square))
 
 (defn guess-row [num-pegs row-num]
   (horizontal-panel
@@ -42,6 +41,11 @@
     :content "Choose a color:"
     :size [400 :by 200]
     :options (map chooser-square colors)))
+
+(defn activate-row [board row-num]
+  (listen
+    (select (to-root board) [(keyword (str "#row-" row-num)) (keyword "JPanel")])
+    :mouse-clicked (fn [e] (config! e :background (show! (color-chooser))))))
 
 (defn show-board []
   (-> (board) show!))
