@@ -1,19 +1,12 @@
 (ns app.gui
-  (:use [seesaw core graphics color])
+  (:use [seesaw core graphics color border])
   (:use app.core))
 
-(defn paint-guess-square [c g]
-  (let [ht (.getHeight c)
-        wd (.getWidth c)
-        brdr 5]
-    (draw g
-      (rect brdr brdr (- ht (* 2 brdr)) (- wd (* 2 brdr)))
-      (style :background "#FFFFFF"))))
-
 (defn guess-square [w h]
-  (canvas :background "#000000"
+  (canvas
+    :border (line-border :thickness 5 :color "#000000")
     :size [w :by h]
-    :paint paint-guess-square))
+    :paint nil))
 
 (defn guess-row [num-pegs row-num]
   (horizontal-panel
