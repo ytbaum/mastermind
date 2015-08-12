@@ -2,8 +2,6 @@
   (:use [seesaw core graphics color])
   (:use app.core))
 
-(def num-pegs 4)
-
 (defn paint-guess-square [c g]
   (let [ht (.getHeight c)
         wd (.getWidth c)
@@ -29,7 +27,7 @@
     :height 500
     :width 500
     :content (scrollable (vertical-panel
-                            :items (vec (repeatedly nturns #(guess-row num-pegs)))
+                            :items (vec (repeatedly nturns #(guess-row ncolors)))
                             :border 5))))
 
 (defn chooser-square [col]
