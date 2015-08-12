@@ -16,9 +16,10 @@
     :paint paint-guess-square
     :listen [:mouse-clicked (fn [e] (config! e :background (show! (color-chooser))))]))
 
-(defn guess-row [num-pegs]
+(defn guess-row [num-pegs row-num]
   (horizontal-panel
     :items (vec (repeatedly num-pegs #(guess-square 100 100)))
+    :id (keyword (str "row-" row-num))
     :border 5))
 
 (defn board []
@@ -27,7 +28,7 @@
     :height 500
     :width 500
     :content (scrollable (vertical-panel
-                            :items (vec (repeatedly nturns #(guess-row ncolors)))
+                            :items (vec (map #(guess-row ncolors %) (range nturns)))
                             :border 5))))
 
 (defn chooser-square [col]
