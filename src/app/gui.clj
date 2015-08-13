@@ -15,7 +15,8 @@
   (horizontal-panel
     :items (vec (repeatedly num-pegs #(guess-square 100 100)))
     :id (keyword (str "row-" row-num))
-    :border 5))
+    :border 5
+    :class :row))
 
 (defn board []
   (frame
