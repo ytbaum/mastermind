@@ -4,6 +4,13 @@
 
 (def default-col "lightGray")
 
+(defn col-name-pair [name-col-pair]
+  (let [pair (vec name-col-pair)]
+    [(take 3 (get-rgba (get pair 1))) (get pair 0)]))
+
+(def colors-map
+  (into {} (map col-name-pair @#'seesaw.color/color-names)))
+
 (defn guess-square [w h]
   (canvas
     :background default-col
