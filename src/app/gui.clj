@@ -22,9 +22,12 @@
     :title "Yoni's frame"
     :height 500
     :width 500
-    :content (scrollable (vertical-panel
-                            :items (vec (map #(guess-row ncolors %) (range nturns)))
-                            :border 5))))
+    :content (horizontal-panel
+                :items [(scrollable (vertical-panel
+                                      :items (vec (map #(guess-row ncolors %) (range nturns)))
+                                      :border 5
+                                      :id :rows))
+                        (vertical-panel :items [(button :id :submit :text "Submit")])])))
 
 (defn chooser-square [col]
   (canvas :background col
