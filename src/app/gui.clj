@@ -42,9 +42,9 @@
     :size [400 :by 200]
     :options (map chooser-square colors)))
 
-(defn activate-row [board row-num]
+(defn activate-row [row]
   (listen
-    (select (to-root board) [(keyword (str "#row-" row-num)) (keyword "JPanel")])
+    (select row [:.row :> :JPanel])
     :mouse-clicked (fn [e]
                     (if-let [background (show! (color-chooser))]
                       (config! e :background background)))))
