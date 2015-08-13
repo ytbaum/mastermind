@@ -56,5 +56,8 @@
                     (if-let [background (show! (color-chooser))]
                       (config! e :background background)))))
 
+(defn get-guess [row]
+  (map #(colors-map (take 3 (get-rgba (config % :background)))) (select row [:.row :JPanel])))
+
 (defn show-board []
   (-> (board) show!))
