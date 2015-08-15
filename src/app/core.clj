@@ -1,7 +1,7 @@
 (ns app.core
+  (:use app.gui [seesaw.core :only [select]])
   (:require [clojure.pprint :as pp] [clojure.string :as s :only [lower-case]]))
 
-(def colors #{"red" "green" "blue" "orange" "white" "yellow"})
 (def nturns 10)
 (def ncolors 4)
 

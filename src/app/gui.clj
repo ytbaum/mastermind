@@ -1,6 +1,5 @@
 (ns app.gui
-  (:use [seesaw core graphics color border])
-  (:use app.core))
+  (:use [seesaw core graphics color border]))
 
 (def default-col "lightgray")
 
@@ -8,6 +7,7 @@
   (let [pair (vec name-col-pair)]
     [(take 3 (get-rgba (get pair 1))) (get pair 0)]))
 
+(def colors #{"red" "green" "blue" "orange" "white" "yellow"})
 (def colors-map
   (into {} (map col-name-pair @#'seesaw.color/color-names)))
 
@@ -25,8 +25,8 @@
     :border 5
     :class :row))
 
-(defn board []
-  (frame
+(defn board [ncolors nturns]
+  (show! (frame
     :title "Yoni's frame"
     :height 500
     :width 500
@@ -35,7 +35,7 @@
                                       :items (vec (map #(guess-row ncolors %) (range nturns)))
                                       :border 5
                                       :id :rows))
-                        (vertical-panel :items [(button :id :submit :text "Submit")])])))
+                        (vertical-panel :items [(button :id :submit :text "Submit")])]))))
 
 (defn chooser-square [col]
   (canvas :background col
