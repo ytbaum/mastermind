@@ -91,7 +91,7 @@
           (row-deac-fn)
           (submit-deac-fn)
           (println feedback)
-          (recur (rest rows) victory))))))
+          (recur (rest rows) (= feedback [ncolors 0 0])))))))
 
 (defn parse-should-play [response]
   (= \y (get (s/lower-case response) 0)))
