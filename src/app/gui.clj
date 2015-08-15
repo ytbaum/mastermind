@@ -69,21 +69,3 @@
                   (select row [:.row :JPanel]))]
       (if (not-any? #{"lightgray"} guess)
         (deliver prom guess)))))
-
-(defn game [b]
-  (show! b)
-  (loop [rows (select b [:.row])
-          turn-num nturns]
-    (if (empty? rows)
-      "end"
-      (let [row (first rows)
-            guess-prom (promise)
-            deac-fn (activate-row row)
-            subm-deac-fn (listen (select b [:#submit]) :mouse-clicked (get-submit-listener row guess-prom))
-            guess @guess-prom]
-        (deac-fn)
-        (subm-deac-fn)
-        (recur (rest rows) (dec turn-num))))))
-
-(defn show-board []
-  (-> (board) show!))

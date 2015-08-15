@@ -70,17 +70,24 @@
   (if victory (println "VICTORY!!!") (println "Bow to me...")))
 
 (defn play-game []
-  (let [combo (get-combo colors ncolors)]
-    (loop [victory false
-          turns-left nturns]
-      (if (or victory (= turns-left 0))
+  (let [combo (get-combo colors ncolors)
+        b (board ncolors nturns)]
+    (loop [rows (select b [:.row])
+           victory false]
+      (if (or victory
+            (empty? rows))
         (do
           (print-result victory)
           [victory combo])
-        (let [guess (get-user-guess colors)
-              feedback (get-feedback guess combo)]
-          (pp/pprint feedback)
-          (recur (= guess combo) (dec turns-left)))))))
+        (let [row (first rows)
+              feedback-prom (promise)
+              row-deac-fn (activate-row row)
+              submit-deac-fn (activate-submit b row feedback-prom)
+              feedback @feedback-prom]
+          (row-deac-fn)
+          (submit-deac-fn)
+          (println feedback)
+          (recur (rest rows) victory))))))
 
 (defn parse-should-play [response]
   (= \y (get (s/lower-case response) 0)))
