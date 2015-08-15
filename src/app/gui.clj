@@ -59,5 +59,13 @@
 (defn get-guess [row]
   (map #(colors-map (take 3 (get-rgba (config % :background)))) (select row [:.row :JPanel])))
 
+(defn get-submit-listener [row prom]
+  (fn [e]
+    (let [guess (map
+                  #(colors-map (take 3 (get-rgba (config % :background))))
+                  (select row [:.row :JPanel]))]
+      (if (not-any? #{"lightgray"} guess)
+        (deliver prom guess)))))
+
 (defn show-board []
   (-> (board) show!))
