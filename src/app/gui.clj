@@ -56,12 +56,6 @@
                     (if-let [background (show! (color-chooser))]
                       (config! e :background background)))))
 
-(defn activate-submit [b row prom]
-  (listen (select b [:#submit]) :mouse-clicked (get-submit-listener row prom)))
-
-(defn get-guess [row]
-  (map #(colors-map (take 3 (get-rgba (config % :background)))) (select row [:.row :JPanel])))
-
 (defn get-submit-listener [row prom]
   (fn [e]
     (let [guess (map
@@ -69,3 +63,9 @@
                   (select row [:.row :JPanel]))]
       (if (not-any? #{"lightgray"} guess)
         (deliver prom guess)))))
+
+(defn activate-submit [b row prom]
+  (listen (select b [:#submit]) :mouse-clicked (get-submit-listener row prom)))
+
+(defn get-guess [row]
+  (map #(colors-map (take 3 (get-rgba (config % :background)))) (select row [:.row :JPanel])))
