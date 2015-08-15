@@ -80,10 +80,10 @@
           (print-result victory)
           [victory combo])
         (let [row (first rows)
-              feedback-prom (promise)
+              guess-prom (promise)
               row-deac-fn (activate-row row)
-              submit-deac-fn (activate-submit b row feedback-prom)
-              feedback @feedback-prom]
+              submit-deac-fn (activate-submit b row guess-prom)
+              feedback (get-feedback @guess-prom combo)]
           (row-deac-fn)
           (submit-deac-fn)
           (println feedback)
