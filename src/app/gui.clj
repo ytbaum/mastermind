@@ -2,7 +2,7 @@
   (:use [seesaw core graphics color border])
   (:use app.core))
 
-(def default-col "lightGray")
+(def default-col "lightgray")
 
 (defn col-name-pair [name-col-pair]
   (let [pair (vec name-col-pair)]
