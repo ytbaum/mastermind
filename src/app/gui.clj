@@ -27,7 +27,7 @@
 
 (defn board [ncolors nturns]
   (show! (frame
-    :title "Yoni's frame"
+    :title "Mastermind!"
     :height 500
     :width 500
     :content (horizontal-panel
