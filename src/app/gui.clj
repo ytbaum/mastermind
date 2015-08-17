@@ -25,6 +25,12 @@
     :border 5
     :class :row))
 
+(defn board [ncolors nturns]
+  (scrollable (vertical-panel
+    :items (vec (map #(guess-row ncolors %) (range nturns)))
+    :border 5
+    :id :rows)))
+
 (defn control-panel []
   (let [v-gap 20]
   (vertical-panel
@@ -43,10 +49,7 @@
       :height 500
       :width 800
       :content (horizontal-panel
-                  :items [(scrollable (vertical-panel
-                                        :items (vec (map #(guess-row ncolors %) (range nturns)))
-                                        :border 5
-                                        :id :rows))
+                  :items [(board ncolors nturns)
                           (control-panel)])))))
 
 (defn chooser-square [col]
