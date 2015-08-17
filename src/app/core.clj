@@ -61,7 +61,6 @@
         (let [freqs (frequencies feedback)
               black-pegs (or (freqs "black") 0)
               white-pegs (or (freqs "white") 0)]
-          (println black-pegs)
           [black-pegs white-pegs (- ncolors (+ black-pegs white-pegs))])
         (let [cur (first remainder)
               elt-found (> (get combo-freqs cur 0) 0)]
