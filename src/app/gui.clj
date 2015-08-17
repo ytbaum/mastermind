@@ -26,16 +26,24 @@
     :class :row))
 
 (defn board [ncolors nturns]
-  (show! (frame
-    :title "Mastermind!"
-    :height 500
-    :width 500
-    :content (horizontal-panel
-                :items [(scrollable (vertical-panel
-                                      :items (vec (map #(guess-row ncolors %) (range nturns)))
-                                      :border 5
-                                      :id :rows))
-                        (vertical-panel :items [(button :id :submit :text "Submit")])]))))
+  (let [v-gap 20]
+    (show! (frame
+      :title "Mastermind!"
+      :height 500
+      :width 800
+      :content (horizontal-panel
+                  :items [(scrollable (vertical-panel
+                                        :items (vec (map #(guess-row ncolors %) (range nturns)))
+                                        :border 5
+                                        :id :rows))
+                          (vertical-panel
+                            :items [[:fill-v v-gap]
+                                    (horizontal-panel
+                                      :size [200 :by 20]
+                                      :items [:fill-h
+                                              (button :id :submit :text "Submit")
+                                              :fill-h])]
+                            :size [200 :by 500])])))))
 
 (defn chooser-square [col]
   (canvas :background col
