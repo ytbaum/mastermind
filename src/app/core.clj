@@ -74,8 +74,8 @@
 
 (defn play-game []
   (let [combo (get-combo colors ncolors)
-        b (board ncolors nturns)]
-    (loop [rows (select b [:.row])
+        f (mm-frame ncolors nturns)]
+    (loop [rows (select f [:.row])
            victory false]
       (if (or victory
             (empty? rows))
@@ -85,7 +85,7 @@
         (let [row (first rows)
               guess-prom (promise)
               row-deac-fn (activate-row row)
-              submit-deac-fn (activate-submit b row guess-prom)
+              submit-deac-fn (activate-submit f row guess-prom)
               feedback (get-feedback @guess-prom combo)]
           (row-deac-fn)
           (submit-deac-fn)
