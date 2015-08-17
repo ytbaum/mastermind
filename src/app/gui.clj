@@ -25,6 +25,17 @@
     :border 5
     :class :row))
 
+(defn control-panel []
+  (let [v-gap 20]
+  (vertical-panel
+    :items [[:fill-v v-gap]
+            (horizontal-panel
+              :size [200 :by 20]
+              :items [:fill-h
+                      (button :id :submit :text "Submit")
+                      :fill-h])]
+    :size [200 :by 500])))
+
 (defn board [ncolors nturns]
   (let [v-gap 20]
     (show! (frame
@@ -36,14 +47,7 @@
                                         :items (vec (map #(guess-row ncolors %) (range nturns)))
                                         :border 5
                                         :id :rows))
-                          (vertical-panel
-                            :items [[:fill-v v-gap]
-                                    (horizontal-panel
-                                      :size [200 :by 20]
-                                      :items [:fill-h
-                                              (button :id :submit :text "Submit")
-                                              :fill-h])]
-                            :size [200 :by 500])])))))
+                          (control-panel)])))))
 
 (defn chooser-square [col]
   (canvas :background col
