@@ -19,7 +19,7 @@
 (defn guess-square [w h]
   (canvas
     :background default-col
-    :border (line-border :thickness 5 :color "darkGray")
+    :border (line-border :thickness 5 :color default-brdr-col)
     :size [w :by h]
     :paint nil))
 
