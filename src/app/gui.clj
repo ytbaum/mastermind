@@ -76,7 +76,7 @@
     (let [guess (map
                   #(colors-map (take 3 (get-rgba (config % :background))))
                   (select row [:.row :JPanel]))]
-      (if (not-any? #{"lightgray"} guess)
+      (if (not-any? #{default-col} guess)
         (deliver prom guess)))))
 
 (defn activate-submit [b row prom]
