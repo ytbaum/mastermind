@@ -76,6 +76,7 @@
   (let [combo (get-combo colors ncolors)
         f (mm-frame ncolors nturns)]
     (loop [rows (select f [:.row])
+           feedback-rows (select f [:.feedback-row])
            victory false]
       (if (or victory
             (empty? rows))
@@ -83,14 +84,15 @@
           (print-result victory)
           [victory combo])
         (let [row (first rows)
+              feedback-row (first feedback-rows)
               guess-prom (promise)
               row-deac-fn (activate-row row)
               submit-deac-fn (activate-submit f row guess-prom)
               feedback (get-feedback @guess-prom combo)]
+          (doall (display-feedback feedback feedback-row))
           (row-deac-fn)
           (submit-deac-fn)
-          (println feedback)
-          (recur (rest rows) (= feedback [ncolors 0 0])))))))
+          (recur (rest rows) (rest feedback-rows) (= feedback [ncolors 0 0])))))))
 
 (defn parse-should-play [response]
   (= \y (get (s/lower-case response) 0)))
