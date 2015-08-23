@@ -54,9 +54,8 @@
 
 (defn feedback-container []
   (border-panel
-    :size [100 :by 100]
+    :size [100 :by 110]
     :class :feedback-ctnr
-    :border (line-border :thickness 5 :color default-brdr-col)
     :north (make-widget [:fill-v 35])
     :south (make-widget [:fill-v 35])
     :east (make-widget [:fill-h 5])
