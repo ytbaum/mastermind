@@ -75,6 +75,7 @@
 (defn play-game []
   (let [combo (get-combo colors ncolors)
         f (mm-frame ncolors nturns)]
+    (add-listeners f)
     (loop [rows (select f [:.row])
            feedback-rows (select f [:.feedback-row])
            victory false]

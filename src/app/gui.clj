@@ -31,10 +31,12 @@
     :class :row))
 
 (defn board [ncolors nturns]
-  (scrollable (vertical-panel
-    :items (vec (map #(guess-row ncolors %) (range nturns)))
-    :border 5
-    :id :rows)))
+  (scrollable
+    (vertical-panel
+      :items (vec (map #(guess-row ncolors %) (range nturns)))
+      :border 5
+      :id :rows)
+    :id :rows-scrl))
 
 (defn feedback-square [col txt]
   (text
@@ -63,10 +65,12 @@
     :center (feedback-row [0 0 0])))
 
 (defn feedback-column [nturns]
-  (scrollable (vertical-panel
-    :items (vec (repeatedly nturns feedback-container))
-    :border 5
-    :id :feedback-col)))
+  (scrollable
+    (vertical-panel
+      :items (vec (repeatedly nturns feedback-container))
+      :border 5
+      :id :feedback-col)
+    :id :feedback-scrl))
 
 (defn control-panel []
   (let [v-gap 20]
@@ -78,6 +82,12 @@
                       (button :id :submit :text "Submit")
                       :fill-h])]
     :size [200 :by 500])))
+
+(defn add-listeners [f]
+  (let [b-scrl (.getVerticalScrollBar (select f [:#rows-scrl]))
+        f-scrl (.getVerticalScrollBar (select f [:#feedback-scrl]))]
+    (listen b-scrl :mouse-dragged (fn [e] (.setValue f-scrl (.getValue (to-widget e)))))
+    (listen f-scrl :mouse-dragged (fn [e] (.setValue b-scrl (.getValue (to-widget e)))))))
 
 (defn mm-frame [ncolors nturns]
   (let [v-gap 20]
