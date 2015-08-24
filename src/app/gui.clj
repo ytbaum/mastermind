@@ -85,9 +85,23 @@
 
 (defn add-listeners [f]
   (let [b-scrl (.getVerticalScrollBar (select f [:#rows-scrl]))
-        f-scrl (.getVerticalScrollBar (select f [:#feedback-scrl]))]
-    (listen b-scrl :mouse-dragged (fn [e] (.setValue f-scrl (.getValue (to-widget e)))))
-    (listen f-scrl :mouse-dragged (fn [e] (.setValue b-scrl (.getValue (to-widget e)))))))
+        f-scrl (.getVerticalScrollBar (select f [:#feedback-scrl]))
+        adjust-f-scrl (fn [e] (.setValue f-scrl (.getValue b-scrl)))
+        adjust-b-scrl (fn [e] (.setValue b-scrl (.getValue f-scrl)))]
+    (listen b-scrl :mouse-dragged adjust-f-scrl)
+    (listen
+      (first (select b-scrl [:<javax.swing.JButton>]))
+      :mouse-clicked adjust-f-scrl)
+    (listen
+      (second (select b-scrl [:<javax.swing.JButton>]))
+      :mouse-clicked adjust-f-scrl)
+    (listen
+      (first (select f-scrl [:<javax.swing.JButton>]))
+      :mouse-clicked adjust-b-scrl)
+    (listen
+      (second (select f-scrl [:<javax.swing.JButton>]))
+      :mouse-clicked adjust-b-scrl)
+    (listen f-scrl :mouse-dragged adjust-b-scrl )))
 
 (defn mm-frame [ncolors nturns]
   (let [v-gap 20]
