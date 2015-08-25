@@ -104,15 +104,16 @@
     (listen f-scrl :mouse-dragged adjust-b-scrl )))
 
 (defn mm-frame [ncolors nturns]
-  (let [v-gap 20]
-    (show! (frame
-      :title "Mastermind!"
-      :height 500
-      :width 800
-      :content (horizontal-panel
-                  :items [(board ncolors nturns)
-                          (feedback-column nturns)
-                          (control-panel)])))))
+  (let [f (frame
+            :title "Mastermind!"
+            :height 500
+            :width 800
+            :content (horizontal-panel
+                        :items [(board ncolors nturns)
+                                (feedback-column nturns)
+                                (control-panel)]))]
+    (add-listeners f)
+    (show! f)))
 
 (defn chooser-square [col]
   (canvas :background col
