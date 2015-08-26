@@ -155,7 +155,7 @@
   (fn [e]
     (let [guess (map
                   #(colors-map (take 3 (get-rgba (config % :background))))
-                  (select row [:.row :JPanel]))]
+                  (get-row-squares row))]
       (if (not-any? #{default-col} guess)
         (deliver prom guess)))))
 
@@ -163,7 +163,7 @@
   (listen (select b [:#submit]) :mouse-clicked (get-submit-listener row prom)))
 
 (defn get-guess [row]
-  (map #(colors-map (take 3 (get-rgba (config % :background)))) (select row [:.row :JPanel])))
+  (map #(colors-map (take 3 (get-rgba (config % :background)))) (get-row-squares row)))
 
 (defn display-feedback [feedback feedback-row]
   (map #(text! %1 %2) (select feedback-row [:.feedback-square]) feedback))
