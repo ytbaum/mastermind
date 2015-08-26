@@ -110,16 +110,6 @@
                         (println "Please enter 'yes' or 'no' ('y'/'n'):"))]
           (recur response))))))
 
-(defn print-instructions []
-  (println "")
-  (println "Welcome to Mastermind!")
-  (println "Guesses should be entered as four-character strings,")
-  (println "where each character is the first letter of an available color.")
-  (println "Available colors are: red, green, yellow, blue, orange, white.")
-  (println "So, for example, to guess 'red' 'green' 'yellow' 'yellow',")
-  (println "you would enter: 'rgyy'.")
-  (println ""))
-
 (defn play []
   (print-instructions)
   (loop [should-play true]
