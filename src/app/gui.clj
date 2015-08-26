@@ -3,6 +3,7 @@
 
 (def default-col "lightgray")
 (def default-brdr-col "darkgray")
+(def active-brdr-col "darkblue")
 (def black-pin-col "black")
 (def white-pin-col "white")
 (def no-pin-col "darkgray")
@@ -16,10 +17,13 @@
 (def colors-map
   (into {} (map col-name-pair @#'seesaw.color/color-names)))
 
+(defn guess-square-border [col]
+  (line-border :thickness 5 :color col))
+
 (defn guess-square [w h]
   (canvas
     :background default-col
-    :border (line-border :thickness 5 :color default-brdr-col)
+    :border (guess-square-border default-brdr-col)
     :size [w :by h]
     :paint nil))
 
@@ -127,12 +131,25 @@
     :size [400 :by 200]
     :options (map chooser-square colors)))
 
+(defn get-row-squares [row]
+  (select row [:.row :> :JPanel]))
+
+(defn chg-border-col [row col]
+  (doall (map
+          #(config! % :border (guess-square-border col))
+          (get-row-squares row))))
+
 (defn activate-row [row]
-  (listen
-    (select row [:.row :> :JPanel])
-    :mouse-clicked (fn [e]
-                    (if-let [background (show! (color-chooser))]
-                      (config! e :background background)))))
+  (let [unlisten-fn (listen
+                  (get-row-squares row)
+                  :mouse-clicked (fn [e]
+                                  (if-let [background (show! (color-chooser))]
+                                    (config! e :background background))))
+        unhighlight-border (fn []
+                      (chg-border-col row default-brdr-col))]
+    (chg-border-col row active-brdr-col)
+    (fn []
+      (unlisten-fn) (unhighlight-border))))
 
 (defn get-submit-listener [row prom]
   (fn [e]
