@@ -84,8 +84,34 @@
               :size [200 :by 20]
               :items [:fill-h
                       (button :id :submit :text "Submit")
+                      :fill-h])
+            [:fill-v v-gap]
+            (horizontal-panel
+              :size [200 :by 20]
+              :items [:fill-h
+                      (button :id :help :text "Help")
                       :fill-h])]
     :size [200 :by 500])))
+
+(defn show-instructions [_]
+  (show!
+    (dialog
+      :title "Instructions"
+      :content
+        (str
+          "Welcome to Mastermind!\n"
+          "For rules, see https://en.wikipedia.org/wiki/Mastermind_(board_game)\n"
+          "The row highlighted in dark blue is the currently active row.\n"
+          "Click on any square in the active row to choose a color\n"
+          "for that square.\n"
+        ` "When you have chosen a color for each square in the active row,\n"
+          "click 'Submit' to submit your guess for evaluation.\n"
+          "Feedback on your guess will appear next to the guess itself.\n"
+          "The first number is the number of black key pegs in the feedback.\n"
+          "The second number is the number of white key pegs in the feedback.\n"
+          "The last number is the number of key peg holes that would be\n"
+          "empty in the feedback.\n")
+      :size [600 :by 300])))
 
 (defn add-listeners [f]
   (let [b-scrl (.getVerticalScrollBar (select f [:#rows-scrl]))
@@ -105,7 +131,8 @@
     (listen
       (second (select f-scrl [:<javax.swing.JButton>]))
       :mouse-clicked adjust-b-scrl)
-    (listen f-scrl :mouse-dragged adjust-b-scrl )))
+    (listen f-scrl :mouse-dragged adjust-b-scrl)
+    (listen (select f [:#help]) :mouse-clicked show-instructions)))
 
 (defn mm-frame [ncolors nturns]
   (let [f (frame
