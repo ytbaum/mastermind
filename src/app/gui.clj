@@ -100,18 +100,23 @@
       :content
         (str
           "Welcome to Mastermind!\n"
-          "For rules, see https://en.wikipedia.org/wiki/Mastermind_(board_game)\n"
-          "The row highlighted in dark blue is the currently active row.\n"
+          "For rules, see https://en.wikipedia.org/wiki/Mastermind_(board_game)\n\n"
+          "When the game is underway, the currently active row will appear\n"
+          "highlighted in dark blue.\n"
           "Click on any square in the active row to choose a color\n"
           "for that square.\n"
         ` "When you have chosen a color for each square in the active row,\n"
           "click 'Submit' to submit your guess for evaluation.\n"
-          "Feedback on your guess will appear next to the guess itself.\n"
+          "Feedback on your guess will appear in the form of three numbers\n"
+          "next to the guess itself.\n"
           "The first number is the number of black key pegs in the feedback.\n"
           "The second number is the number of white key pegs in the feedback.\n"
           "The last number is the number of key peg holes that would be\n"
-          "empty in the feedback.\n")
-      :size [600 :by 300])))
+          "empty in the feedback.\n\n"
+          "To see these instructions again at any point during the game,\n"
+          "click on the 'Help' button.\n")
+      :size [600 :by 400])))
+
 
 (defn add-listeners [f]
   (let [b-scrl (.getVerticalScrollBar (select f [:#rows-scrl]))
