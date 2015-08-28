@@ -25,7 +25,8 @@
     :background default-col
     :border (guess-square-border default-brdr-col)
     :size [w :by h]
-    :paint nil))
+    :paint nil
+    :class :guess-square))
 
 (defn guess-row [num-pegs row-num]
   (horizontal-panel
@@ -206,3 +207,10 @@
 
 (defn display-feedback [feedback feedback-row]
   (map #(text! %1 %2) (select feedback-row [:.feedback-square]) feedback))
+
+(defn clear-board [f]
+  (let [guess-squares (select f [:.guess-square])
+        feedback-squares (select f [:.feedback-square])]
+    (doall (map #(config! % :background default-col) guess-squares))
+    (doall (map #(config! % :border (guess-square-border default-brdr-col)) guess-squares))
+    (doall (map #(config! % :text 0) feedback-squares))))
