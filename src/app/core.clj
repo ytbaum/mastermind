@@ -72,9 +72,9 @@
 (defn print-result [victory]
   (if victory (println "VICTORY!!!") (println "Bow to me...")))
 
-(defn play-game []
-  (let [combo (get-combo colors ncolors)
-        f (mm-frame ncolors nturns)]
+(defn play-game [f]
+  (let [combo (get-combo colors ncolors)]
+
     (loop [rows (select f [:.row])
            feedback-rows (select f [:.feedback-row])
            victory false]
@@ -94,27 +94,15 @@
           (submit-deac-fn)
           (recur (rest rows) (rest feedback-rows) (= feedback [ncolors 0 0])))))))
 
-(defn parse-should-play [response]
-  (= \y (get (s/lower-case response) 0)))
-
-(defn ask-should-play []
-  (loop [response nil]
-    (if response
-      response
-      (do
-        (println "Play again? (y/n):")
-        (let [input (s/lower-case (read-line))
-              response (case input
-                        ("y" "yes") "y"
-                        ("n" "no") "n"
-                        (println "Please enter 'yes' or 'no' ('y'/'n'):"))]
-          (recur response))))))
-
 (defn play []
-  (print-instructions)
-  (loop [should-play true]
-    (if (= "n" should-play)
-      (println "Thanks for playing!")
-      (do
-        (play-game)
-        (recur (ask-should-play))))))
+  (let [f (mm-frame ncolors nturns)]
+    (show-instructions nil)
+    (loop [should-play true]
+      (if (= :no should-play)
+        (println "Thanks for playing!")
+        (do
+          (play-game f)
+          (let [should-play (end-game-dialog)]
+            (if (= :success should-play)
+              (clear-board f))
+            (recur should-play)))))))
