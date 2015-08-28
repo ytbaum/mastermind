@@ -117,6 +117,13 @@
           "click on the 'Help' button.\n")
       :size [600 :by 400])))
 
+(defn end-game-dialog []
+  (show!
+    (dialog
+      :title "Play Again?"
+      :content "Would you like to play again?"
+      :option-type :yes-no
+      :size [400 :by 200])))
 
 (defn add-listeners [f]
   (let [b-scrl (.getVerticalScrollBar (select f [:#rows-scrl]))
