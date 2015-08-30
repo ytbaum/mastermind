@@ -139,6 +139,12 @@
       :option-type :yes-no
       :size [400 :by 200])))
 
+(defn show-thx-for-playing []
+  (show!
+    (dialog
+      :content "Thanks for playing!"
+      :size [200 :by 100])))
+
 (defn add-listeners [f]
   (let [b-scrl (.getVerticalScrollBar (select f [:#rows-scrl]))
         f-scrl (.getVerticalScrollBar (select f [:#feedback-scrl]))
