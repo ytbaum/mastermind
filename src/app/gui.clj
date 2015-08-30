@@ -100,7 +100,7 @@
       :title "Instructions"
       :content
         (str
-          "Welcome to Mastermind!\n"
+          "Welcome to Mastermind!\n\n"
           "For rules, see https://en.wikipedia.org/wiki/Mastermind_(board_game)\n\n"
           "When the game is underway, the currently active row will appear\n"
           "highlighted in dark blue.\n"
