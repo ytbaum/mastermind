@@ -18,6 +18,8 @@
 (def colors-map
   (into {} (map col-name-pair @#'seesaw.color/color-names)))
 
+(def frame-height 500)
+
 ; Functions for constructing the guess rows
 
 (defn guess-square-border [col]
@@ -81,6 +83,7 @@
       :items (vec (repeatedly nturns feedback-container))
       :border 5
       :id :feedback-col)
+    :size [150 :by frame-height]
     :id :feedback-scrl))
 
 ; Function for constructing the right-most panel, where the user can control the board
