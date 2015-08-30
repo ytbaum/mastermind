@@ -104,5 +104,7 @@
           (play-game f)
           (let [should-play (end-game-dialog)]
             (if (= :success should-play)
-              (clear-board f))
+              (do
+                (clear-board f)
+                (scroll-to-top f)))
             (recur should-play)))))))
