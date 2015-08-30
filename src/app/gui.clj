@@ -41,6 +41,7 @@
       :items (vec (map #(guess-row ncolors %) (range nturns)))
       :border 5
       :id :rows)
+    :vscroll :never
     :id :rows-scrl))
 
 (defn feedback-square [col txt]
