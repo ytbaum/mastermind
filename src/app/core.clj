@@ -99,7 +99,7 @@
     (show-instructions nil)
     (loop [should-play true]
       (if (= :no should-play)
-        (println "Thanks for playing!")
+        (show-thx-for-playing)
         (do
           (play-game f)
           (let [should-play (end-game-dialog)]
