@@ -214,3 +214,8 @@
     (doall (map #(config! % :background default-col) guess-squares))
     (doall (map #(config! % :border (guess-square-border default-brdr-col)) guess-squares))
     (doall (map #(config! % :text 0) feedback-squares))))
+
+(defn scroll-to-top [f]
+  (do
+    (scroll! (select f [:#rows]) :to :top)
+    (scroll! (select f [:#feedback-col]) :to :top)))
