@@ -8,6 +8,7 @@
 (def white-pin-col "white")
 (def no-pin-col "darkgray")
 
+; Define some initial parameters
 
 (defn col-name-pair [name-col-pair]
   (let [pair (vec name-col-pair)]
@@ -16,6 +17,8 @@
 (def colors #{"red" "green" "blue" "orange" "white" "yellow"})
 (def colors-map
   (into {} (map col-name-pair @#'seesaw.color/color-names)))
+
+; Functions for constructing the guess rows
 
 (defn guess-square-border [col]
   (line-border :thickness 5 :color col))
@@ -43,6 +46,8 @@
       :id :rows)
     :vscroll :never
     :id :rows-scrl))
+
+; Functions for constructing the feedback area
 
 (defn feedback-square [col txt]
   (text
@@ -78,6 +83,8 @@
       :id :feedback-col)
     :id :feedback-scrl))
 
+; Function for constructing the right-most panel, where the user can control the board
+
 (defn control-panel []
   (let [v-gap 20]
   (vertical-panel
@@ -94,6 +101,8 @@
                       (button :id :help :text "Help")
                       :fill-h])]
     :size [200 :by 500])))
+
+; Functions to construct dialog boxes
 
 (defn show-instructions [_]
   (show!
