@@ -71,7 +71,6 @@
 
 (defn play-game [f]
   (let [combo (get-combo colors ncolors)]
-
     (loop [rows (select f [:.row])
            feedback-rows (select f [:.feedback-row])
            victory false]
