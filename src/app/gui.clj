@@ -131,11 +131,14 @@
           "click on the 'Help' button.\n")
       :size [600 :by 400])))
 
-(defn end-game-dialog []
+(defn result-message [victory]
+  (if victory "VICTORY!!!" "You. Lose."))
+
+(defn end-game-dialog [victory]
   (show!
     (dialog
       :title "Play Again?"
-      :content "Would you like to play again?"
+      :content (str (result-message victory) "\n\n" "Would you like to play again?")
       :option-type :yes-no
       :size [400 :by 200])))
 

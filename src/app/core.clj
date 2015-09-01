@@ -69,9 +69,6 @@
             (rest remainder)
             (if elt-found (update-in combo-freqs [cur] dec) combo-freqs)))))))
 
-(defn print-result [victory]
-  (if victory (println "VICTORY!!!") (println "Bow to me...")))
-
 (defn play-game [f]
   (let [combo (get-combo colors ncolors)]
 
@@ -80,9 +77,7 @@
            victory false]
       (if (or victory
             (empty? rows))
-        (do
-          (print-result victory)
-          [victory combo])
+        victory
         (let [row (first rows)
               feedback-row (first feedback-rows)
               guess-prom (promise)
@@ -100,11 +95,10 @@
     (loop [should-play true]
       (if (= :no should-play)
         (show-thx-for-playing)
-        (do
-          (play-game f)
-          (let [should-play (end-game-dialog)]
+        (let [victory (play-game f)
+              should-play (end-game-dialog victory)]
             (if (= :success should-play)
               (do
                 (clear-board f)
                 (scroll-to-top f)))
-            (recur should-play)))))))
+            (recur should-play))))))
