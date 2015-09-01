@@ -52,7 +52,7 @@
 ; Functions for constructing the feedback area
 
 (defn feedback-square [col txt]
-  (text
+  (label
     :text txt
     :background default-col
     :foreground col
