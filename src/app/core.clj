@@ -1,5 +1,5 @@
 (ns app.core
-  (:use app.gui [seesaw.core :only [select]])
+  (:use app.gui)
   (:require [clojure.pprint :as pp] [clojure.string :as s :only [lower-case]]))
 
 (def nturns 10)
@@ -65,8 +65,8 @@
 
 (defn play-game [f]
   (let [combo (get-combo colors ncolors)]
-    (loop [rows (select f [:.row])
-           feedback-rows (select f [:.feedback-row])
+    (loop [rows (get-guess-rows f)
+           feedback-rows (get-feedback-rows f)
            victory false]
       (if (or victory
             (empty? rows))

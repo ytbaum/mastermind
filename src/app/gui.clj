@@ -20,6 +20,13 @@
 
 (def frame-height 500)
 
+; Helper functions
+(defn get-guess-rows [f]
+  (select f [:.row]))
+
+(defn get-feedback-rows [f]
+  (select f [:.feedback-row]))
+
 ; Functions for constructing the guess rows
 
 (defn guess-square-border [col]
