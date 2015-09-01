@@ -17,12 +17,6 @@
 (defn select-values [map ks]
          (reduce #(conj %1 (map %2)) [] ks))
 
-(defn get-user-guess [colors]
-  (println "Enter your guess:")
-  (let [guess (read-line)
-        color-map (get-color-map colors) ]
-    (select-values color-map (map str (vec guess)))))  
-
 ; find which elements of the user guess vector, if any, match the hidden combo in both color and location
 (defn get-loc-matches [guess combo]
   (loop [guess guess
