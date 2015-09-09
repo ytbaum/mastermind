@@ -184,7 +184,8 @@
             :content (horizontal-panel
                         :items [(board ncolors nturns)
                                 (feedback-column nturns)
-                                (control-panel)]))]
+                                (control-panel)])
+            :on-close :exit)]
     (add-listeners f)
     (show! f)))
 
