@@ -27,6 +27,9 @@
 (defn get-feedback-rows [f]
   (select f [:.feedback-row]))
 
+(defn repaint-frame [f]
+  (repaint! (select f [:*])))
+
 ; Functions for constructing the guess rows
 
 (defn guess-square-border [col]

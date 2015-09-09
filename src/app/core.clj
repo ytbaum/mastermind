@@ -94,7 +94,8 @@
             (if (= :success should-play)
               (do
                 (clear-board f)
-                (scroll-to-top f)))
+                (scroll-to-top f)
+                (repaint-frame f)))
             (recur should-play))))))
 
 (defn -main []
