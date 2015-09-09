@@ -1,4 +1,5 @@
 (ns app.core
+  (:gen-class)
   (:use app.gui)
   (:require [clojure.pprint :as pp] [clojure.string :as s :only [lower-case]]))
 
@@ -95,3 +96,6 @@
                 (clear-board f)
                 (scroll-to-top f)))
             (recur should-play))))))
+
+(defn -main []
+  (play))
